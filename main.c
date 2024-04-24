@@ -20,9 +20,9 @@ void render_grid(SDL_Renderer *renderer, int x, int y)
     cell.w = cell_size;
     cell.h = cell_size;
 
-    for(int i = 0; i < 100; i++)
+    for(int i = 0; i < 50; i++)
     {
-        for(int j = 0; j < 100; j++)
+        for(int j = 0; j < 50; j++)
         {
             cell.x = x + i * cell_size;
             cell.y = y + j * cell_size;
@@ -363,10 +363,6 @@ int main(int argc, char* argv[])
 
     SDL_Event event;
 
-    int real_x = 4800;
-    int real_y = 3600;
-    int camera_maxX = SCREEN_WIDTH;
-    int camera_maxY = SCREEN_HEIGHT;
     int posX = 350;
     int posY = 250;
 
@@ -410,7 +406,11 @@ int main(int argc, char* argv[])
                 SDL_Rect rect_run = {posX, posY, WIDTH, HEIGHT};
                 SDL_RenderCopy(renderer, texture_for_running_in_plus[current_run % frames_type_one], NULL, &rect_run);
                 current_run = (current_run + 1) % frames_type_one;
-                posX += 10;
+
+                if(camera_x >= -550)
+                {
+                    camera_x -= 10;
+                }
             }
             else if(event.key.keysym.sym == SDLK_a)
             {
@@ -424,9 +424,9 @@ int main(int argc, char* argv[])
                 SDL_Rect rect_run = {posX, posY, WIDTH, HEIGHT};
                 SDL_RenderCopy(renderer, texture_for_running_in_minus[current_run % frames_type_one], NULL, &rect_run);
                 current_run = (current_run + 1) % frames_type_one;
-                if(posX > 0)
+                if(camera_x < 330)
                 {
-                    posX -= 10;
+                    camera_x += 10;
                 }
             }
             else if(event.key.keysym.sym == SDLK_w)
@@ -441,9 +441,9 @@ int main(int argc, char* argv[])
                 SDL_Rect rect_run = {posX, posY, WIDTH, HEIGHT};
                 SDL_RenderCopy(renderer, texture_for_running_up[current_up % frames_type_one], NULL, &rect_run);
                 current_up = (current_up + 1) % frames_type_one;
-                if(posY > 0)
+                if(camera_y < 230)
                 {
-                    posY -= 10;
+                    camera_y += 10;
                 }
             }
             else if(event.key.keysym.sym == SDLK_s)
@@ -458,28 +458,11 @@ int main(int argc, char* argv[])
                 SDL_Rect rect_run = {posX, posY, WIDTH, HEIGHT};
                 SDL_RenderCopy(renderer, texture_for_running_down[current_up % frames_type_one], NULL, &rect_run);
                 current_up = (current_up + 1) % frames_type_one;
-                posY += 10;
+                if(camera_y >= -640)
+                {
+                    camera_y -= 10;
+                }
             }
-        }
-
-        camera_x = posX - SCREEN_WIDTH / 2;
-        camera_y = posY - SCREEN_HEIGHT / 2;
-
-        if(camera_x < 0)
-        {
-            camera_x = 0;
-        }
-        if(camera_y < 0)
-        {
-            camera_y = 0;
-        }
-        if (camera_x > real_x - camera_maxX)
-        {
-            camera_x = real_x - camera_maxX;
-        }
-        if (camera_y > real_y - camera_maxY)
-        {
-            camera_y = real_y - camera_maxY;
         }
 
         SDL_RenderClear(renderer);
@@ -489,12 +472,12 @@ int main(int argc, char* argv[])
         {
             if(direction == 1)
             {
-                SDL_Rect rect_render = {posX - camera_x, posY - camera_y, WIDTH, HEIGHT};
+                SDL_Rect rect_render = {posX, posY, WIDTH, HEIGHT};
                 SDL_RenderCopy(renderer, texture_for_running_in_minus[current_run % frames_type_one], NULL, &rect_render);
             }
             else
             {
-                SDL_Rect rect_render = {posX - camera_x, posY - camera_y, WIDTH, HEIGHT};
+                SDL_Rect rect_render = {posX, posY, WIDTH, HEIGHT};
                 SDL_RenderCopy(renderer, texture_for_running_in_plus[current_run % frames_type_one], NULL, &rect_render);
             }
             isSide = 0;
@@ -503,12 +486,12 @@ int main(int argc, char* argv[])
         {
             if(direction == 0)
             {
-                SDL_Rect rect_render = {posX - camera_x, posY - camera_y, WIDTH, HEIGHT};
+                SDL_Rect rect_render = {posX, posY, WIDTH, HEIGHT};
                 SDL_RenderCopy(renderer, texture_for_hitting_in_plus[current_hit_in_plus % frames_type_two], NULL, &rect_render);
             }
             else
             {
-                SDL_Rect rect_render = {posX - camera_x, posY - camera_y, WIDTH, HEIGHT};
+                SDL_Rect rect_render = {posX - 42, posY, WIDTH, HEIGHT};
                 SDL_RenderCopy(renderer, texture_for_hitting_in_minus[current_hit_in_minus % frames_type_two], NULL, &rect_render);
             }
             isHitting = 0;
@@ -517,12 +500,12 @@ int main(int argc, char* argv[])
         {
             if(direction == 0)
             {
-                SDL_Rect rect_render = {posX - camera_x, posY - camera_y, WIDTH, HEIGHT};
+                SDL_Rect rect_render = {posX, posY, WIDTH, HEIGHT};
                 SDL_RenderCopy(renderer, texture_for_running_up[current_up % frames_type_one], NULL, &rect_render);
             }
             else
             {
-                SDL_Rect rect_render = {posX - camera_x, posY - camera_y, WIDTH, HEIGHT};
+                SDL_Rect rect_render = {posX, posY, WIDTH, HEIGHT};
                 SDL_RenderCopy(renderer, texture_for_running_down[current_up % frames_type_one], NULL, &rect_render);
             }
             isUp = 0;
@@ -533,12 +516,12 @@ int main(int argc, char* argv[])
             {
                 if(type_2 == 1)
                 {
-                    SDL_Rect rect_render = {posX - camera_x, posY - camera_y, WIDTH, HEIGHT};
+                    SDL_Rect rect_render = {posX, posY, WIDTH, HEIGHT};
                     SDL_RenderCopy(renderer, texture_for_standing_in_up[current_vert % frames_type_one], NULL, &rect_render);
                 }
                 else
                 {
-                    SDL_Rect rect_render = {posX - camera_x, posY - camera_y, WIDTH, HEIGHT};
+                    SDL_Rect rect_render = {posX, posY, WIDTH, HEIGHT};
                     SDL_RenderCopy(renderer, texture_for_standing_in_down[current_vert % frames_type_one], NULL, &rect_render);
                 }
             }
@@ -546,12 +529,12 @@ int main(int argc, char* argv[])
             {
                 if(type_2 == 1)
                 {
-                    SDL_Rect rect_render = {posX - camera_x, posY - camera_y, WIDTH, HEIGHT};
+                    SDL_Rect rect_render = {posX, posY, WIDTH, HEIGHT};
                     SDL_RenderCopy(renderer, texture_for_standing_in_plus[current_stand % frames_type_one], NULL, &rect_render);
                 }
                 else
                 {
-                    SDL_Rect rect_render = {posX - camera_x, posY - camera_y, WIDTH, HEIGHT};
+                    SDL_Rect rect_render = {posX, posY, WIDTH, HEIGHT};
                     SDL_RenderCopy(renderer, texture_for_standing_in_minus[current_stand % frames_type_one], NULL, &rect_render);
                 }
             }
