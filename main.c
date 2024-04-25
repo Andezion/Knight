@@ -74,12 +74,20 @@ void render_grid(SDL_Renderer *renderer, int x, int y)
     }
 }
 
+struct enemies
+{
+    int health1;
+    int health2;
+    int health3;
+    int health4;
+};
+
 int main(int argc, char* argv[])
 {
     srand(time(NULL));
     SDL_Init(SDL_INIT_EVERYTHING);
 
-    SDL_Window *window = SDL_CreateWindow("Test game!", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_RESIZABLE);
+    SDL_Window *window = SDL_CreateWindow("Knight", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_RESIZABLE);
     if (window == NULL)
     {
         printf("Error in creating window: %s\n", SDL_GetError());
@@ -109,6 +117,12 @@ int main(int argc, char* argv[])
 
     SDL_Texture *texture_for_running_up[frames_type_one];
     SDL_Texture *texture_for_running_down[frames_type_one];
+
+    SDL_Texture *texture_for_hitting_up[frames_type_one];
+    SDL_Texture *texture_for_hitting_down[frames_type_one];
+
+    const char *hitting_in_up[4] = {"up1.bmp", "up_hit3.bmp", "up_hit2.bmp", "up1.bmp"};
+    const char *hitting_in_down[4] = {"down1.bmp", "down_hit2.bmp", "down_hit3.bmp", "down1.bmp"};
 
     const char *running_files_up[4] = {"up1.bmp", "up2.bmp", "up1.bmp", "up3.bmp"};
     const char *running_files_down[4] = {"down1.bmp", "down2.bmp", "down1.bmp", "down3.bmp"};
@@ -345,6 +359,50 @@ int main(int argc, char* argv[])
             return 1;
         }
     }
+    for(int i = 0; i < frames_type_one; i++)
+    {
+        SDL_Surface* surface = SDL_LoadBMP(hitting_in_down[i]);
+        if (surface == NULL)
+        {
+            printf("Error loading standing image %d: %s\n", i, SDL_GetError());
+            SDL_DestroyRenderer(renderer);
+            SDL_DestroyWindow(window);
+            SDL_Quit();
+            return 1;
+        }
+        texture_for_hitting_down[i] = SDL_CreateTextureFromSurface(renderer, surface);
+        SDL_FreeSurface(surface);
+        if (texture_for_hitting_down[i] == NULL)
+        {
+            printf("Error creating texture for standing image %d: %s\n", i, SDL_GetError());
+            SDL_DestroyRenderer(renderer);
+            SDL_DestroyWindow(window);
+            SDL_Quit();
+            return 1;
+        }
+    }
+    for(int i = 0; i < frames_type_one; i++)
+    {
+        SDL_Surface* surface = SDL_LoadBMP(hitting_in_up[i]);
+        if (surface == NULL)
+        {
+            printf("Error loading standing image %d: %s\n", i, SDL_GetError());
+            SDL_DestroyRenderer(renderer);
+            SDL_DestroyWindow(window);
+            SDL_Quit();
+            return 1;
+        }
+        texture_for_hitting_up[i] = SDL_CreateTextureFromSurface(renderer, surface);
+        SDL_FreeSurface(surface);
+        if (texture_for_hitting_up[i] == NULL)
+        {
+            printf("Error creating texture for standing image %d: %s\n", i, SDL_GetError());
+            SDL_DestroyRenderer(renderer);
+            SDL_DestroyWindow(window);
+            SDL_Quit();
+            return 1;
+        }
+    }
 
     int current_hit_in_plus = 0;
     int current_hit_in_minus = 0;
@@ -352,6 +410,8 @@ int main(int argc, char* argv[])
     int current_vert = 0;
     int current_run = 0;
     int current_up = 0;
+    int current_hit_up = 0;
+    int current_hit_down = 0;
 
     int running = 1;
     int isSide = 0;
@@ -369,6 +429,14 @@ int main(int argc, char* argv[])
     int camera_x = posX - SCREEN_WIDTH / 2;
     int camera_y = posY - SCREEN_HEIGHT / 2;
 
+    struct enemies enemies;
+    enemies.health1 = 5;
+    enemies.health2 = 5;
+    enemies.health3 = 5;
+    enemies.health4 = 5;
+
+    int corX = 50 + rand() % 1001;
+    int corY = 50 + rand() % 1001;
     while (running)
     {
         while (SDL_PollEvent(&event))
@@ -381,17 +449,35 @@ int main(int argc, char* argv[])
             {
                 isHitting = 1;
 
-                if(direction == 0)
+                if(isUp)
                 {
-                    SDL_Rect rect_hit = {posX, posY, WIDTH, HEIGHT};
-                    SDL_RenderCopy(renderer, texture_for_hitting_in_plus[current_hit_in_plus % frames_type_two], NULL, &rect_hit);
-                    current_hit_in_plus = (current_hit_in_plus + 1) % frames_type_two;
+                    if(direction == 0)
+                    {
+                        SDL_Rect rect_hit = {posX, posY, WIDTH, HEIGHT};
+                        SDL_RenderCopy(renderer, texture_for_hitting_up[current_hit_up % frames_type_one], NULL, &rect_hit);
+                        current_hit_up = (current_hit_up + 1) % frames_type_one;
+                    }
+                    else
+                    {
+                        SDL_Rect rect_hit = {posX, posY, WIDTH, HEIGHT};
+                        SDL_RenderCopy(renderer, texture_for_hitting_down[current_hit_down % frames_type_one], NULL, &rect_hit);
+                        current_hit_down = (current_hit_down + 1) % frames_type_one;
+                    }
                 }
-                if(direction == 1)
+                else
                 {
-                    SDL_Rect rect_hit = {posX, posY, WIDTH, HEIGHT};
-                    SDL_RenderCopy(renderer, texture_for_hitting_in_minus[current_hit_in_minus % frames_type_two], NULL, &rect_hit);
-                    current_hit_in_minus = (current_hit_in_minus + 1) % frames_type_two;
+                    if(direction == 0)
+                    {
+                        SDL_Rect rect_hit = {posX, posY, WIDTH, HEIGHT};
+                        SDL_RenderCopy(renderer, texture_for_hitting_in_plus[current_hit_in_plus % frames_type_two], NULL, &rect_hit);
+                        current_hit_in_plus = (current_hit_in_plus + 1) % frames_type_two;
+                    }
+                    if(direction == 1)
+                    {
+                        SDL_Rect rect_hit = {posX, posY, WIDTH, HEIGHT};
+                        SDL_RenderCopy(renderer, texture_for_hitting_in_minus[current_hit_in_minus % frames_type_two], NULL, &rect_hit);
+                        current_hit_in_minus = (current_hit_in_minus + 1) % frames_type_two;
+                    }
                 }
             }
             else if (event.key.keysym.sym == SDLK_d)
@@ -468,6 +554,16 @@ int main(int argc, char* argv[])
         SDL_RenderClear(renderer);
         render_grid(renderer, camera_x, camera_y);
 
+        SDL_Rect enemy = {camera_x + corX, camera_y + corY, 100, 100};
+        SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255);
+        if(enemies.health1 > 0)
+        {
+            SDL_RenderFillRect(renderer, &enemy);
+        }
+
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+
+
         if (isSide)
         {
             if(direction == 1)
@@ -484,6 +580,10 @@ int main(int argc, char* argv[])
         }
         else if (isHitting)
         {
+            if(enemy.x + 120 >= posX && enemy.y + 120 >= posY)
+            {
+                enemies.health1--;
+            }
             if(direction == 0)
             {
                 SDL_Rect rect_render = {posX, posY, WIDTH, HEIGHT};
