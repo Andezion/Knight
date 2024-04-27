@@ -118,11 +118,11 @@ int main(int argc, char* argv[])
     SDL_Texture *texture_for_running_up[frames_type_one];
     SDL_Texture *texture_for_running_down[frames_type_one];
 
-    SDL_Texture *texture_for_hitting_up[frames_type_one];
-    SDL_Texture *texture_for_hitting_down[frames_type_one];
+    SDL_Texture *texture_for_hitting_up[frames_type_two];
+    SDL_Texture *texture_for_hitting_down[frames_type_two];
 
-    const char *hitting_in_up[4] = {"up1.bmp", "up_hit3.bmp", "up_hit2.bmp", "up1.bmp"};
-    const char *hitting_in_down[4] = {"down1.bmp", "down_hit2.bmp", "down_hit3.bmp", "down1.bmp"};
+    const char *hitting_in_up[7] = {"up1.bmp", "up_hit3.bmp", "up_hit3.bmp", "up1.bmp", "up_hit2.bmp", "up_hit2.bmp","up1.bmp"};
+    const char *hitting_in_down[7] = {"down1.bmp", "down_hit2.bmp", "down_hit2.bmp", "down1.bmp", "down_hit3.bmp", "down_hit3.bmp", "down1.bmp"};
 
     const char *running_files_up[4] = {"up1.bmp", "up2.bmp", "up1.bmp", "up3.bmp"};
     const char *running_files_down[4] = {"down1.bmp", "down2.bmp", "down1.bmp", "down3.bmp"};
@@ -359,7 +359,7 @@ int main(int argc, char* argv[])
             return 1;
         }
     }
-    for(int i = 0; i < frames_type_one; i++)
+    for(int i = 0; i < frames_type_two; i++)
     {
         SDL_Surface* surface = SDL_LoadBMP(hitting_in_down[i]);
         if (surface == NULL)
@@ -381,7 +381,7 @@ int main(int argc, char* argv[])
             return 1;
         }
     }
-    for(int i = 0; i < frames_type_one; i++)
+    for(int i = 0; i < frames_type_two; i++)
     {
         SDL_Surface* surface = SDL_LoadBMP(hitting_in_up[i]);
         if (surface == NULL)
@@ -406,12 +406,13 @@ int main(int argc, char* argv[])
 
     int current_hit_in_plus = 0;
     int current_hit_in_minus = 0;
+    int current_hit_up = 0;
+    int current_hit_down = 0;
+
     int current_stand = 0;
     int current_vert = 0;
     int current_run = 0;
     int current_up = 0;
-    int current_hit_up = 0;
-    int current_hit_down = 0;
 
     int running = 1;
     int isSide = 0;
@@ -449,29 +450,36 @@ int main(int argc, char* argv[])
             {
                 isHitting = 1;
 
-                if(direction == 0 && isUp == 1)
+
+                if(type_1 == 1)
                 {
-                    SDL_Rect rect_hit = {posX, posY, WIDTH, HEIGHT};
-                    SDL_RenderCopy(renderer, texture_for_hitting_up[current_hit_up % frames_type_one], NULL, &rect_hit);
-                    current_hit_up = (current_hit_up + 1) % frames_type_one;
+                    if(type_2 == 1)
+                    {
+                        SDL_Rect rect_hit = {posX, posY, WIDTH, HEIGHT};
+                        SDL_RenderCopy(renderer, texture_for_hitting_up[current_hit_up % frames_type_two], NULL, &rect_hit);
+                        current_hit_up = (current_hit_up + 1) % frames_type_two;
+                    }
+                    else
+                    {
+                        SDL_Rect rect_hit = {posX, posY, WIDTH, HEIGHT};
+                        SDL_RenderCopy(renderer, texture_for_hitting_down[current_hit_down % frames_type_two], NULL, &rect_hit);
+                        current_hit_down = (current_hit_down + 1) % frames_type_two;
+                    }
                 }
-                if(direction == 1 && isUp == 1)
+                else
                 {
-                    SDL_Rect rect_hit = {posX, posY, WIDTH, HEIGHT};
-                    SDL_RenderCopy(renderer, texture_for_hitting_down[current_hit_down % frames_type_one], NULL, &rect_hit);
-                    current_hit_down = (current_hit_down + 1) % frames_type_one;
-                }
-                if(direction == 0 && isUp == 0)
-                {
-                    SDL_Rect rect_hit = {posX, posY, WIDTH, HEIGHT};
-                    SDL_RenderCopy(renderer, texture_for_hitting_in_plus[current_hit_in_plus % frames_type_two], NULL, &rect_hit);
-                    current_hit_in_plus = (current_hit_in_plus + 1) % frames_type_two;
-                }
-                if(direction == 1 && isUp == 0)
-                {
-                    SDL_Rect rect_hit = {posX, posY, WIDTH, HEIGHT};
-                    SDL_RenderCopy(renderer, texture_for_hitting_in_minus[current_hit_in_minus % frames_type_two], NULL, &rect_hit);
-                    current_hit_in_minus = (current_hit_in_minus + 1) % frames_type_two;
+                    if(type_2 == 1)
+                    {
+                        SDL_Rect rect_hit = {posX, posY, WIDTH, HEIGHT};
+                        SDL_RenderCopy(renderer, texture_for_hitting_in_plus[current_hit_in_plus % frames_type_two], NULL, &rect_hit);
+                        current_hit_in_plus = (current_hit_in_plus + 1) % frames_type_two;
+                    }
+                    else
+                    {
+                        SDL_Rect rect_hit = {posX, posY, WIDTH, HEIGHT};
+                        SDL_RenderCopy(renderer, texture_for_hitting_in_minus[current_hit_in_minus % frames_type_two], NULL, &rect_hit);
+                        current_hit_in_minus = (current_hit_in_minus + 1) % frames_type_two;
+                    }
                 }
             }
             else if (event.key.keysym.sym == SDLK_d)
@@ -579,25 +587,31 @@ int main(int argc, char* argv[])
                 enemies.health1--;
             }
 
-            if(direction == 0 && isUp == 1)
+            if(type_1 == 1)
             {
-                SDL_Rect rect_hit = {posX, posY, WIDTH, HEIGHT};
-                SDL_RenderCopy(renderer, texture_for_hitting_up[current_hit_up % frames_type_one], NULL, &rect_hit);
+                if(type_2 == 1) // удар вверх
+                {
+                    SDL_Rect rect_render = {posX, posY, WIDTH, HEIGHT};
+                    SDL_RenderCopy(renderer, texture_for_hitting_up[current_hit_up % frames_type_one], NULL, &rect_render);
+                }
+                else // удар вниз
+                {
+                    SDL_Rect rect_render = {posX - 3.5, posY, WIDTH, HEIGHT};
+                    SDL_RenderCopy(renderer, texture_for_hitting_down[current_hit_down % frames_type_one], NULL, &rect_render);
+                }
             }
-            if(direction == 1 && isUp == 1)
+            else
             {
-                SDL_Rect rect_hit = {posX, posY, WIDTH, HEIGHT};
-                SDL_RenderCopy(renderer, texture_for_hitting_down[current_hit_down % frames_type_one], NULL, &rect_hit);
-            }
-            if(direction == 0 && isUp == 0)
-            {
-                SDL_Rect rect_render = {posX, posY, WIDTH, HEIGHT};
-                SDL_RenderCopy(renderer, texture_for_hitting_in_plus[current_hit_in_plus % frames_type_two], NULL, &rect_render);
-            }
-            if(direction == 1 && isUp == 0)
-            {
-                SDL_Rect rect_render = {posX - 42, posY, WIDTH, HEIGHT};
-                SDL_RenderCopy(renderer, texture_for_hitting_in_minus[current_hit_in_minus % frames_type_two], NULL, &rect_render);
+                if(type_2 == 1) // удар влево
+                {
+                    SDL_Rect rect_render = {posX, posY, WIDTH, HEIGHT};
+                    SDL_RenderCopy(renderer, texture_for_hitting_in_plus[current_hit_in_plus % frames_type_two], NULL, &rect_render);
+                }
+                else // удар вправо
+                {
+                    SDL_Rect rect_render = {posX - 42, posY, WIDTH, HEIGHT};
+                    SDL_RenderCopy(renderer, texture_for_hitting_in_minus[current_hit_in_minus % frames_type_two], NULL, &rect_render);
+                }
             }
             isHitting = 0;
         }
@@ -658,6 +672,8 @@ int main(int argc, char* argv[])
     {
         SDL_DestroyTexture(texture_for_hitting_in_plus[i]);
         SDL_DestroyTexture(texture_for_hitting_in_minus[i]);
+        SDL_DestroyTexture(texture_for_hitting_up[i]);
+        SDL_DestroyTexture(texture_for_hitting_down[i]);
     }
     for (int i = 0; i < frames_type_one; i++)
     {
@@ -669,8 +685,6 @@ int main(int argc, char* argv[])
         SDL_DestroyTexture(texture_for_running_down[i]);
         SDL_DestroyTexture(texture_for_standing_in_up[i]);
         SDL_DestroyTexture(texture_for_standing_in_down[i]);
-        SDL_DestroyTexture(texture_for_hitting_up[i]);
-        SDL_DestroyTexture(texture_for_hitting_down[i]);
     }
 
     SDL_DestroyRenderer(renderer);
