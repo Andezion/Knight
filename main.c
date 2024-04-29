@@ -74,6 +74,29 @@ void render_grid(SDL_Renderer *renderer, int x, int y)
     }
 }
 
+int loadTextureArray(SDL_Renderer* renderer, const char** fileNames, int arraySize, SDL_Texture** textureArray)
+{
+    for(int i = 0; i < arraySize; i++)
+    {
+        SDL_Surface* surface = SDL_LoadBMP(fileNames[i]);
+        if (surface == NULL)
+        {
+            printf("Error loading image %d: %s\n", i, SDL_GetError());
+            SDL_DestroyRenderer(renderer);
+            return 1;
+        }
+        textureArray[i] = SDL_CreateTextureFromSurface(renderer, surface);
+        SDL_FreeSurface(surface);
+        if (textureArray[i] == NULL)
+        {
+            printf("Error creating texture for image %d: %s\n", i, SDL_GetError());
+            SDL_DestroyRenderer(renderer);
+            return 1;
+        }
+    }
+    return 0;
+}
+
 struct enemies
 {
     int health1;
@@ -105,303 +128,122 @@ int main(int argc, char* argv[])
 
     SDL_Texture *texture_for_hitting_in_plus[frames_type_two];
     SDL_Texture *texture_for_hitting_in_minus[frames_type_two];
-
     SDL_Texture *texture_for_standing_in_plus[frames_type_one];
     SDL_Texture *texture_for_standing_in_minus[frames_type_one];
-
     SDL_Texture *texture_for_standing_in_up[frames_type_one];
     SDL_Texture *texture_for_standing_in_down[frames_type_one];
-
     SDL_Texture *texture_for_running_in_plus[frames_type_one];
     SDL_Texture *texture_for_running_in_minus[frames_type_one];
-
     SDL_Texture *texture_for_running_up[frames_type_one];
     SDL_Texture *texture_for_running_down[frames_type_one];
+    SDL_Texture *texture_for_hitting_up[frames_type_one];
+    SDL_Texture *texture_for_hitting_down[frames_type_one];
 
-    SDL_Texture *texture_for_hitting_up[frames_type_two];
-    SDL_Texture *texture_for_hitting_down[frames_type_two];
+    SDL_Texture *bot_standing_in_up[frames_type_one];
+    SDL_Texture *bot_standing_in_down[frames_type_one];
+    //SDL_Texture *bot_hitting_in_up[];
+    //SDL_Texture *bot_hitting_in_down[];
 
-    const char *hitting_in_up[7] = {"up1.bmp", "up_hit3.bmp", "up_hit3.bmp", "up1.bmp", "up_hit2.bmp", "up_hit2.bmp","up1.bmp"};
-    const char *hitting_in_down[7] = {"down1.bmp", "down_hit2.bmp", "down_hit2.bmp", "down1.bmp", "down_hit3.bmp", "down_hit3.bmp", "down1.bmp"};
-
+    const char *hitting_in_up[7] = {"up1.bmp", "up_hit3.bmp", "up1.bmp", "up_hit2.bmp","up1.bmp"};
+    const char *hitting_in_down[7] = {"down1.bmp", "down_hit2.bmp", "down1.bmp", "down_hit3.bmp", "down1.bmp"};
     const char *running_files_up[4] = {"up1.bmp", "up2.bmp", "up1.bmp", "up3.bmp"};
     const char *running_files_down[4] = {"down1.bmp", "down2.bmp", "down1.bmp", "down3.bmp"};
-
     const char *hitting_files_in_plus[7] = {"voin1.bmp", "voin2.bmp", "voin3.bmp", "voin4.bmp", "voin3.bmp", "voin2.bmp", "voin1.bmp"};
     const char *hitting_files_in_minus[7] = {"voin1_1.bmp", "voin2_1.bmp", "voin3_1.bmp", "voin4_1.bmp", "voin3_1.bmp", "voin2_1.bmp", "voin1_1.bmp"};
-
     const char *standing_files_in_plus[4] = {"stand1.bmp", "stand2.bmp", "stand2.bmp", "stand1.bmp"};
     const char *standing_files_in_minus[4] = {"stand2_1.bmp", "stand1_1.bmp", "stand1_1.bmp", "stand2_1.bmp"};
-
     const char *standing_files_in_up[4] = {"up1.bmp", "up4.bmp", "up4.bmp", "up1.bmp"};
     const char *standing_files_in_down[4] = {"down1.bmp", "down4.bmp", "down4.bmp", "down1.bmp"};
-
     const char *running_files_in_plus[4] = {"stand1.bmp", "run1.bmp", "stand1.bmp", "run2.bmp"};
     const char *running_files_in_minus[4] = {"stand2_1.bmp", "run1_1.bmp", "stand1_1.bmp", "run1_1.bmp"};
 
-    for(int i = 0; i < frames_type_two; i++)
+    const char *bot_standing_files_in_down[4] = {"bot_down1.bmp", "bot_down2.bmp", "bot_down1.bmp", "bot_down2.bmp"};
+    const char *bot_standing_files_in_up[4] = {"bot_up1.bmp", "bot_up2.bmp", "bot_up1.bmp", "bot_up2.bmp"};
+
+    if(loadTextureArray(renderer, hitting_files_in_plus, frames_type_two, texture_for_hitting_in_plus) != 0)
     {
-        SDL_Surface* surface = SDL_LoadBMP(hitting_files_in_plus[i]);
-        if (surface == NULL)
-        {
-            printf("Error loading hitting image %d: %s\n", i, SDL_GetError());
-            SDL_DestroyRenderer(renderer);
-            SDL_DestroyWindow(window);
-            SDL_Quit();
-            return 1;
-        }
-        texture_for_hitting_in_plus[i] = SDL_CreateTextureFromSurface(renderer, surface);
-        SDL_FreeSurface(surface);
-        if (texture_for_hitting_in_plus[i] == NULL)
-        {
-            printf("Error creating texture for hitting image %d: %s\n", i, SDL_GetError());
-            SDL_DestroyRenderer(renderer);
-            SDL_DestroyWindow(window);
-            SDL_Quit();
-            return 1;
-        }
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+        return 1;
     }
-    for(int i = 0; i < frames_type_two; i++)
+    if(loadTextureArray(renderer, hitting_files_in_minus, frames_type_two, texture_for_hitting_in_minus) != 0)
     {
-        SDL_Surface* surface = SDL_LoadBMP(hitting_files_in_minus[i]);
-        if (surface == NULL)
-        {
-            printf("Error loading hitting image %d: %s\n", i, SDL_GetError());
-            SDL_DestroyRenderer(renderer);
-            SDL_DestroyWindow(window);
-            SDL_Quit();
-            return 1;
-        }
-        texture_for_hitting_in_minus[i] = SDL_CreateTextureFromSurface(renderer, surface);
-        SDL_FreeSurface(surface);
-        if (texture_for_hitting_in_minus[i] == NULL)
-        {
-            printf("Error creating texture for hitting image %d: %s\n", i, SDL_GetError());
-            SDL_DestroyRenderer(renderer);
-            SDL_DestroyWindow(window);
-            SDL_Quit();
-            return 1;
-        }
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+        return 1;
     }
-    for(int i = 0; i < frames_type_one; i++)
+    if(loadTextureArray(renderer, standing_files_in_plus, frames_type_one, texture_for_standing_in_plus) != 0)
     {
-        SDL_Surface* surface = SDL_LoadBMP(standing_files_in_up[i]);
-        if(surface == NULL)
-        {
-            printf("Error loading standing image %d: %s\n", i, SDL_GetError());
-            SDL_DestroyRenderer(renderer);
-            SDL_DestroyWindow(window);
-            SDL_Quit();
-            return 1;
-        }
-        texture_for_standing_in_up[i] = SDL_CreateTextureFromSurface(renderer, surface);
-        SDL_FreeSurface(surface);
-        if(texture_for_standing_in_up[i] == NULL)
-        {
-            printf("Error creating texture for standing image %d: %s\n", i, SDL_GetError());
-            SDL_DestroyRenderer(renderer);
-            SDL_DestroyWindow(window);
-            SDL_Quit();
-            return 1;
-        }
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+        return 1;
     }
-    for(int i = 0; i < frames_type_one; i++)
+    if(loadTextureArray(renderer, standing_files_in_minus, frames_type_one, texture_for_standing_in_minus) != 0)
     {
-        SDL_Surface* surface = SDL_LoadBMP(standing_files_in_down[i]);
-        if(surface == NULL)
-        {
-            printf("Error loading standing image %d: %s\n", i, SDL_GetError());
-            SDL_DestroyRenderer(renderer);
-            SDL_DestroyWindow(window);
-            SDL_Quit();
-            return 1;
-        }
-        texture_for_standing_in_down[i] = SDL_CreateTextureFromSurface(renderer, surface);
-        SDL_FreeSurface(surface);
-        if(texture_for_standing_in_down[i] == NULL)
-        {
-            printf("Error creating texture for standing image %d: %s\n", i, SDL_GetError());
-            SDL_DestroyRenderer(renderer);
-            SDL_DestroyWindow(window);
-            SDL_Quit();
-            return 1;
-        }
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+        return 1;
     }
-    for(int i = 0; i < frames_type_one; i++)
+    if(loadTextureArray(renderer, standing_files_in_up, frames_type_one, texture_for_standing_in_up) != 0)
     {
-        SDL_Surface* surface = SDL_LoadBMP(running_files_up[i]);
-        if(surface == NULL)
-        {
-            printf("Error loading standing image %d: %s\n", i, SDL_GetError());
-            SDL_DestroyRenderer(renderer);
-            SDL_DestroyWindow(window);
-            SDL_Quit();
-            return 1;
-        }
-        texture_for_running_up[i] = SDL_CreateTextureFromSurface(renderer, surface);
-        SDL_FreeSurface(surface);
-        if(texture_for_running_up[i] == NULL)
-        {
-            printf("Error creating texture for standing image %d: %s\n", i, SDL_GetError());
-            SDL_DestroyRenderer(renderer);
-            SDL_DestroyWindow(window);
-            SDL_Quit();
-            return 1;
-        }
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+        return 1;
     }
-    for(int i = 0; i < frames_type_one; i++)
+    if(loadTextureArray(renderer, standing_files_in_down, frames_type_one, texture_for_standing_in_down) != 0)
     {
-        SDL_Surface* surface = SDL_LoadBMP(running_files_down[i]);
-        if(surface == NULL)
-        {
-            printf("Error loading standing image %d: %s\n", i, SDL_GetError());
-            SDL_DestroyRenderer(renderer);
-            SDL_DestroyWindow(window);
-            SDL_Quit();
-            return 1;
-        }
-        texture_for_running_down[i] = SDL_CreateTextureFromSurface(renderer, surface);
-        SDL_FreeSurface(surface);
-        if(texture_for_running_up[i] == NULL)
-        {
-            printf("Error creating texture for standing image %d: %s\n", i, SDL_GetError());
-            SDL_DestroyRenderer(renderer);
-            SDL_DestroyWindow(window);
-            SDL_Quit();
-            return 1;
-        }
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+        return 1;
     }
-    for(int i = 0; i < frames_type_one; i++)
+    if(loadTextureArray(renderer, running_files_in_plus, frames_type_one, texture_for_running_in_plus) != 0)
     {
-        SDL_Surface* surface = SDL_LoadBMP(running_files_in_plus[i]);
-        if(surface == NULL)
-        {
-            printf("Error loading standing image %d: %s\n", i, SDL_GetError());
-            SDL_DestroyRenderer(renderer);
-            SDL_DestroyWindow(window);
-            SDL_Quit();
-            return 1;
-        }
-        texture_for_running_in_plus[i] = SDL_CreateTextureFromSurface(renderer, surface);
-        SDL_FreeSurface(surface);
-        if(texture_for_running_in_plus[i] == NULL)
-        {
-            printf("Error creating texture for standing image %d: %s\n", i, SDL_GetError());
-            SDL_DestroyRenderer(renderer);
-            SDL_DestroyWindow(window);
-            SDL_Quit();
-            return 1;
-        }
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+        return 1;
     }
-    for(int i = 0; i < frames_type_one; i++)
+    if(loadTextureArray(renderer, running_files_in_minus, frames_type_one, texture_for_running_in_minus) != 0)
     {
-        SDL_Surface* surface = SDL_LoadBMP(running_files_in_minus[i]);
-        if(surface == NULL)
-        {
-            printf("Error loading standing image %d: %s\n", i, SDL_GetError());
-            SDL_DestroyRenderer(renderer);
-            SDL_DestroyWindow(window);
-            SDL_Quit();
-            return 1;
-        }
-        texture_for_running_in_minus[i] = SDL_CreateTextureFromSurface(renderer, surface);
-        SDL_FreeSurface(surface);
-        if(texture_for_running_in_minus[i] == NULL)
-        {
-            printf("Error creating texture for standing image %d: %s\n", i, SDL_GetError());
-            SDL_DestroyRenderer(renderer);
-            SDL_DestroyWindow(window);
-            SDL_Quit();
-            return 1;
-        }
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+        return 1;
     }
-    for(int i = 0; i < frames_type_one; i++)
+    if(loadTextureArray(renderer, running_files_up, frames_type_one, texture_for_running_up) != 0)
     {
-        SDL_Surface* surface = SDL_LoadBMP(standing_files_in_plus[i]);
-        if (surface == NULL)
-        {
-            printf("Error loading standing image %d: %s\n", i, SDL_GetError());
-            SDL_DestroyRenderer(renderer);
-            SDL_DestroyWindow(window);
-            SDL_Quit();
-            return 1;
-        }
-        texture_for_standing_in_plus[i] = SDL_CreateTextureFromSurface(renderer, surface);
-        SDL_FreeSurface(surface);
-        if (texture_for_standing_in_plus[i] == NULL)
-        {
-            printf("Error creating texture for standing image %d: %s\n", i, SDL_GetError());
-            SDL_DestroyRenderer(renderer);
-            SDL_DestroyWindow(window);
-            SDL_Quit();
-            return 1;
-        }
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+        return 1;
     }
-    for(int i = 0; i < frames_type_one; i++)
+    if(loadTextureArray(renderer, running_files_down, frames_type_one, texture_for_running_down) != 0)
     {
-        SDL_Surface* surface = SDL_LoadBMP(standing_files_in_minus[i]);
-        if (surface == NULL)
-        {
-            printf("Error loading standing image %d: %s\n", i, SDL_GetError());
-            SDL_DestroyRenderer(renderer);
-            SDL_DestroyWindow(window);
-            SDL_Quit();
-            return 1;
-        }
-        texture_for_standing_in_minus[i] = SDL_CreateTextureFromSurface(renderer, surface);
-        SDL_FreeSurface(surface);
-        if (texture_for_standing_in_minus[i] == NULL)
-        {
-            printf("Error creating texture for standing image %d: %s\n", i, SDL_GetError());
-            SDL_DestroyRenderer(renderer);
-            SDL_DestroyWindow(window);
-            SDL_Quit();
-            return 1;
-        }
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+        return 1;
     }
-    for(int i = 0; i < frames_type_two; i++)
+    if(loadTextureArray(renderer, hitting_in_down, frames_type_one, texture_for_hitting_down) != 0)
     {
-        SDL_Surface* surface = SDL_LoadBMP(hitting_in_down[i]);
-        if (surface == NULL)
-        {
-            printf("Error loading standing image %d: %s\n", i, SDL_GetError());
-            SDL_DestroyRenderer(renderer);
-            SDL_DestroyWindow(window);
-            SDL_Quit();
-            return 1;
-        }
-        texture_for_hitting_down[i] = SDL_CreateTextureFromSurface(renderer, surface);
-        SDL_FreeSurface(surface);
-        if (texture_for_hitting_down[i] == NULL)
-        {
-            printf("Error creating texture for standing image %d: %s\n", i, SDL_GetError());
-            SDL_DestroyRenderer(renderer);
-            SDL_DestroyWindow(window);
-            SDL_Quit();
-            return 1;
-        }
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+        return 1;
     }
-    for(int i = 0; i < frames_type_two; i++)
+    if(loadTextureArray(renderer, hitting_in_up, frames_type_one, texture_for_hitting_up) != 0)
     {
-        SDL_Surface* surface = SDL_LoadBMP(hitting_in_up[i]);
-        if (surface == NULL)
-        {
-            printf("Error loading standing image %d: %s\n", i, SDL_GetError());
-            SDL_DestroyRenderer(renderer);
-            SDL_DestroyWindow(window);
-            SDL_Quit();
-            return 1;
-        }
-        texture_for_hitting_up[i] = SDL_CreateTextureFromSurface(renderer, surface);
-        SDL_FreeSurface(surface);
-        if (texture_for_hitting_up[i] == NULL)
-        {
-            printf("Error creating texture for standing image %d: %s\n", i, SDL_GetError());
-            SDL_DestroyRenderer(renderer);
-            SDL_DestroyWindow(window);
-            SDL_Quit();
-            return 1;
-        }
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+        return 1;
+    }
+
+    if(loadTextureArray(renderer, bot_standing_files_in_down, frames_type_one, bot_standing_in_down) != 0)
+    {
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+        return 1;
+    }
+    if(loadTextureArray(renderer, bot_standing_files_in_up, frames_type_one, bot_standing_in_up) != 0)
+    {
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+        return 1;
     }
 
     int current_hit_in_plus = 0;
@@ -413,6 +255,12 @@ int main(int argc, char* argv[])
     int current_vert = 0;
     int current_run = 0;
     int current_up = 0;
+
+    int bot_up1 = 0;
+    int bot_down1 = 0;
+
+    int bot_up2 = 0;
+    int bot_down2 = 0;
 
     int running = 1;
     int isSide = 0;
@@ -436,8 +284,14 @@ int main(int argc, char* argv[])
     enemies.health3 = 5;
     enemies.health4 = 5;
 
-    int corX = 50 + rand() % 1001;
-    int corY = 50 + rand() % 1001;
+    int corX_1 = 100 + rand() % 601;
+    int corY_1 = 100 + rand() % 601;
+    int for_bot_1 = rand() % 2;
+
+    int corX_2 = 100 + rand() % 601;
+    int corY_2 = 100 + rand() % 601;
+    int for_bot_2 = rand() % 2;
+
     while (running)
     {
         while (SDL_PollEvent(&event))
@@ -556,15 +410,31 @@ int main(int argc, char* argv[])
         SDL_RenderClear(renderer);
         render_grid(renderer, camera_x, camera_y);
 
-        SDL_Rect enemy = {camera_x + corX, camera_y + corY, 100, 100};
-        SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255);
+        SDL_Rect enemy_1 = {camera_x + corX_1, camera_y + corY_1, 100, 100};
         if(enemies.health1 > 0)
         {
-            SDL_RenderFillRect(renderer, &enemy);
+            if(for_bot_1 == 1)
+            {
+                SDL_RenderCopy(renderer, bot_standing_in_down[bot_down1 % frames_type_one], NULL, &enemy_1);
+            }
+            else
+            {
+                SDL_RenderCopy(renderer, bot_standing_in_up[bot_up1 % frames_type_one], NULL, &enemy_1);
+            }
         }
 
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-
+        SDL_Rect enemy_2 = {camera_x + corX_2, camera_y + corY_2, 100, 100};
+        if(enemies.health2 > 0)
+        {
+            if(for_bot_2 == 1)
+            {
+                SDL_RenderCopy(renderer, bot_standing_in_down[bot_down2 % frames_type_one], NULL, &enemy_2);
+            }
+            else
+            {
+                SDL_RenderCopy(renderer, bot_standing_in_up[bot_up2 % frames_type_one], NULL, &enemy_2);
+            }
+        }
 
         if (isSide)
         {
@@ -582,9 +452,13 @@ int main(int argc, char* argv[])
         }
         else if (isHitting)
         {
-            if(enemy.x + 120 >= posX && enemy.y + 120 >= posY)
+            if(enemy_1.x + 60 >= posX && enemy_1.y + 60 >= posY)
             {
                 enemies.health1--;
+            }
+            if(enemy_2.x + 60 >= posX && enemy_2.y + 60 >= posY)
+            {
+                enemies.health2--;
             }
 
             if(type_1 == 1)
@@ -596,7 +470,7 @@ int main(int argc, char* argv[])
                 }
                 else // удар вниз
                 {
-                    SDL_Rect rect_render = {posX - 3.5, posY, WIDTH, HEIGHT};
+                    SDL_Rect rect_render = {posX - 3, posY, WIDTH, HEIGHT};
                     SDL_RenderCopy(renderer, texture_for_hitting_down[current_hit_down % frames_type_one], NULL, &rect_render);
                 }
             }
@@ -665,8 +539,11 @@ int main(int argc, char* argv[])
 
         current_stand = (current_stand + 1) % 4;
         current_vert = (current_vert + 1) % 4;
+        bot_down1 = (bot_down1 + 1) % 4;
+        bot_up1 = (bot_up1 + 1) % 4;
+        bot_down2 = (bot_down2 + 1) % 4;
+        bot_up2 = (bot_up2 + 1) % 4;
     }
-
 
     for (int i = 0; i < frames_type_two; i++)
     {
@@ -677,6 +554,8 @@ int main(int argc, char* argv[])
     }
     for (int i = 0; i < frames_type_one; i++)
     {
+        SDL_DestroyTexture(bot_standing_in_up[i]);
+        SDL_DestroyTexture(bot_standing_in_down[i]);
         SDL_DestroyTexture(texture_for_standing_in_plus[i]);
         SDL_DestroyTexture(texture_for_standing_in_minus[i]);
         SDL_DestroyTexture(texture_for_running_in_plus[i]);
