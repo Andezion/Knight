@@ -258,9 +258,10 @@ int main(int argc, char* argv[])
 
     int bot_up1 = 0;
     int bot_down1 = 0;
-
     int bot_up2 = 0;
     int bot_down2 = 0;
+    int bot_up3 = 0;
+    int bot_down3 = 0;
 
     int running = 1;
     int isSide = 0;
@@ -291,6 +292,10 @@ int main(int argc, char* argv[])
     int corX_2 = 100 + rand() % 601;
     int corY_2 = 100 + rand() % 601;
     int for_bot_2 = rand() % 2;
+
+    int corX_3 = 100 + rand() % 601;
+    int corY_3 = 100 + rand() % 601;
+    int for_bot_3 = rand() % 2;
 
     while (running)
     {
@@ -436,6 +441,19 @@ int main(int argc, char* argv[])
             }
         }
 
+        SDL_Rect enemy_3 = {camera_x + corX_3, camera_y + corY_3, 100, 100};
+        if(enemies.health3 > 0)
+        {
+            if(for_bot_3 == 1)
+            {
+                SDL_RenderCopy(renderer, bot_standing_in_down[bot_down3 % frames_type_one], NULL, &enemy_3);
+            }
+            else
+            {
+                SDL_RenderCopy(renderer, bot_standing_in_up[bot_up3 % frames_type_one], NULL, &enemy_3);
+            }
+        }
+
         if (isSide)
         {
             if(direction == 1)
@@ -539,10 +557,13 @@ int main(int argc, char* argv[])
 
         current_stand = (current_stand + 1) % 4;
         current_vert = (current_vert + 1) % 4;
+
         bot_down1 = (bot_down1 + 1) % 4;
         bot_up1 = (bot_up1 + 1) % 4;
         bot_down2 = (bot_down2 + 1) % 4;
         bot_up2 = (bot_up2 + 1) % 4;
+        bot_down3 = (bot_down3 + 1) % 4;
+        bot_up3 = (bot_up3 + 1) % 4;
     }
 
     for (int i = 0; i < frames_type_two; i++)
