@@ -73,7 +73,6 @@ void render_grid(SDL_Renderer *renderer, int x, int y)
         }
     }
 }
-
 int loadTextureArray(SDL_Renderer* renderer, const char** fileNames, int arraySize, SDL_Texture** textureArray)
 {
     for(int i = 0; i < arraySize; i++)
@@ -262,6 +261,8 @@ int main(int argc, char* argv[])
     int bot_down2 = 0;
     int bot_up3 = 0;
     int bot_down3 = 0;
+    int bot_up4 = 0;
+    int bot_down4 = 0;
 
     int running = 1;
     int isSide = 0;
@@ -285,17 +286,10 @@ int main(int argc, char* argv[])
     enemies.health3 = 5;
     enemies.health4 = 5;
 
-    int corX_1 = 100 + rand() % 601;
-    int corY_1 = 100 + rand() % 601;
     int for_bot_1 = rand() % 2;
-
-    int corX_2 = 100 + rand() % 601;
-    int corY_2 = 100 + rand() % 601;
     int for_bot_2 = rand() % 2;
-
-    int corX_3 = 100 + rand() % 601;
-    int corY_3 = 100 + rand() % 601;
     int for_bot_3 = rand() % 2;
+    int for_bot_4 = rand() % 2;
 
     while (running)
     {
@@ -308,8 +302,7 @@ int main(int argc, char* argv[])
             else if (event.key.keysym.sym == SDLK_SPACE)
             {
                 isHitting = 1;
-
-
+                
                 if(type_1 == 1)
                 {
                     if(type_2 == 1)
@@ -415,7 +408,7 @@ int main(int argc, char* argv[])
         SDL_RenderClear(renderer);
         render_grid(renderer, camera_x, camera_y);
 
-        SDL_Rect enemy_1 = {camera_x + corX_1, camera_y + corY_1, 100, 100};
+        SDL_Rect enemy_1 = {camera_x + 100, camera_y + 100, 100, 100};
         if(enemies.health1 > 0)
         {
             if(for_bot_1 == 1)
@@ -428,7 +421,7 @@ int main(int argc, char* argv[])
             }
         }
 
-        SDL_Rect enemy_2 = {camera_x + corX_2, camera_y + corY_2, 100, 100};
+        SDL_Rect enemy_2 = {camera_x + 100, camera_y + 800, 100, 100};
         if(enemies.health2 > 0)
         {
             if(for_bot_2 == 1)
@@ -441,7 +434,7 @@ int main(int argc, char* argv[])
             }
         }
 
-        SDL_Rect enemy_3 = {camera_x + corX_3, camera_y + corY_3, 100, 100};
+        SDL_Rect enemy_3 = {camera_x + 800, camera_y + 100, 100, 100};
         if(enemies.health3 > 0)
         {
             if(for_bot_3 == 1)
@@ -451,6 +444,19 @@ int main(int argc, char* argv[])
             else
             {
                 SDL_RenderCopy(renderer, bot_standing_in_up[bot_up3 % frames_type_one], NULL, &enemy_3);
+            }
+        }
+
+        SDL_Rect enemy_4 = {camera_x + 800, camera_y + 800, 100, 100};
+        if(enemies.health4 > 0)
+        {
+            if(for_bot_4 == 1)
+            {
+                SDL_RenderCopy(renderer, bot_standing_in_down[bot_down4 % frames_type_one], NULL, &enemy_4);
+            }
+            else
+            {
+                SDL_RenderCopy(renderer, bot_standing_in_up[bot_up4 % frames_type_one], NULL, &enemy_4);
             }
         }
 
@@ -477,6 +483,14 @@ int main(int argc, char* argv[])
             if(enemy_2.x + 60 >= posX && enemy_2.y + 60 >= posY)
             {
                 enemies.health2--;
+            }
+            if(enemy_3.x + 60 >= posX && enemy_3.y + 60 >= posY)
+            {
+                enemies.health3--;
+            }
+            if(enemy_4.x + 60 >= posX && enemy_4.y + 60 >= posY)
+            {
+                enemies.health4--;
             }
 
             if(type_1 == 1)
@@ -564,6 +578,8 @@ int main(int argc, char* argv[])
         bot_up2 = (bot_up2 + 1) % 4;
         bot_down3 = (bot_down3 + 1) % 4;
         bot_up3 = (bot_up3 + 1) % 4;
+        bot_down4 = (bot_down4 + 1) % 4;
+        bot_up4 = (bot_up4 + 1) % 4;
     }
 
     for (int i = 0; i < frames_type_two; i++)
