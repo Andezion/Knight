@@ -291,6 +291,11 @@ int main(int argc, char* argv[])
     int for_bot_3 = rand() % 2;
     int for_bot_4 = rand() % 2;
 
+    int bot_cor_x = 100;
+    int bot_cor_y = 800;
+
+    int moving_bot_1 = 0;
+
     while (running)
     {
         while (SDL_PollEvent(&event))
@@ -408,7 +413,27 @@ int main(int argc, char* argv[])
         SDL_RenderClear(renderer);
         render_grid(renderer, camera_x, camera_y);
 
-        SDL_Rect enemy_1 = {camera_x + 100, camera_y + 100, 100, 100};
+        moving_bot_1++;
+        if(moving_bot_1 == 5)
+        {
+            bot_cor_x = bot_cor_x + 50;
+        }
+        if(moving_bot_1 == 10)
+        {
+            bot_cor_y = bot_cor_y - 50;
+        }
+        if(moving_bot_1 == 15)
+        {
+            bot_cor_x = bot_cor_x - 50;
+        }
+        if(moving_bot_1 == 20)
+        {
+            bot_cor_y = bot_cor_y + 50;
+            moving_bot_1 = 0;
+        }
+
+
+        SDL_Rect enemy_1 = {camera_x + bot_cor_x, camera_y + bot_cor_y - 700, 100, 100};
         if(enemies.health1 > 0)
         {
             if(for_bot_1 == 1)
@@ -421,7 +446,7 @@ int main(int argc, char* argv[])
             }
         }
 
-        SDL_Rect enemy_2 = {camera_x + 100, camera_y + 800, 100, 100};
+        SDL_Rect enemy_2 = {camera_x + bot_cor_x, camera_y + bot_cor_y, 100, 100};
         if(enemies.health2 > 0)
         {
             if(for_bot_2 == 1)
@@ -434,7 +459,7 @@ int main(int argc, char* argv[])
             }
         }
 
-        SDL_Rect enemy_3 = {camera_x + 800, camera_y + 100, 100, 100};
+        SDL_Rect enemy_3 = {camera_x + bot_cor_x + 700, camera_y + bot_cor_y - 700, 100, 100};
         if(enemies.health3 > 0)
         {
             if(for_bot_3 == 1)
@@ -447,7 +472,7 @@ int main(int argc, char* argv[])
             }
         }
 
-        SDL_Rect enemy_4 = {camera_x + 800, camera_y + 800, 100, 100};
+        SDL_Rect enemy_4 = {camera_x + bot_cor_x + 700, camera_y + bot_cor_y, 100, 100};
         if(enemies.health4 > 0)
         {
             if(for_bot_4 == 1)
