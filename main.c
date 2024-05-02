@@ -16,6 +16,8 @@ void render_grid(SDL_Renderer *renderer, int x, int y)
 {
     int cell_size = 20;
 
+    srand(time(NULL));
+
     SDL_Rect cell;
     cell.w = cell_size;
     cell.h = cell_size;
@@ -505,15 +507,15 @@ int main(int argc, char* argv[])
             {
                 enemies.health1--;
             }
-            if(enemy_2.x + 60 >= posX && enemy_2.y + 60 >= posY)
+            else if(enemy_2.x + 60 >= posX && enemy_2.y + 60 >= posY)
             {
                 enemies.health2--;
             }
-            if(enemy_3.x + 60 >= posX && enemy_3.y + 60 >= posY)
+            else if(enemy_3.x + 60 >= posX && enemy_3.y + 60 >= posY)
             {
                 enemies.health3--;
             }
-            if(enemy_4.x + 60 >= posX && enemy_4.y + 60 >= posY)
+            else if(enemy_4.x + 60 >= posX && enemy_4.y + 60 >= posY)
             {
                 enemies.health4--;
             }
@@ -599,10 +601,13 @@ int main(int argc, char* argv[])
 
         bot_down1 = (bot_down1 + 1) % 4;
         bot_up1 = (bot_up1 + 1) % 4;
+
         bot_down2 = (bot_down2 + 1) % 4;
         bot_up2 = (bot_up2 + 1) % 4;
+
         bot_down3 = (bot_down3 + 1) % 4;
         bot_up3 = (bot_up3 + 1) % 4;
+
         bot_down4 = (bot_down4 + 1) % 4;
         bot_up4 = (bot_up4 + 1) % 4;
     }
