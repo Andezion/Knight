@@ -12,6 +12,14 @@ int SCREEN_HEIGHT = 600;
 int frames_type_one = 4;
 int frames_type_two = 7;
 
+int checker_if_corner(int x, int y)
+{
+    if(x >= -550 && x < 330 && y < 230 && x >= -640)
+    {
+        return 0;
+    }
+    return 1;
+}
 void render_grid(SDL_Renderer *renderer, int x, int y)
 {
     int cell_size = 20;
@@ -104,6 +112,11 @@ struct enemies
     int health2;
     int health3;
     int health4;
+
+    int for_1;
+    int for_2;
+    int for_3;
+    int for_4;
 };
 
 int main(int argc, char* argv[])
@@ -293,8 +306,14 @@ int main(int argc, char* argv[])
     int for_bot_3 = rand() % 2;
     int for_bot_4 = rand() % 2;
 
-    int bot_cor_x = 100;
-    int bot_cor_y = 800;
+    int bot_cor_x_1 = 0;
+    int bot_cor_y_1 = 0;
+    int bot_cor_x_2 = 0;
+    int bot_cor_y_2 = 0;
+    int bot_cor_x_3 = 0;
+    int bot_cor_y_3 = 0;
+    int bot_cor_x_4 = 0;
+    int bot_cor_y_4 = 0;
 
     int moving_bot_1 = 0;
 
@@ -416,27 +435,756 @@ int main(int argc, char* argv[])
         render_grid(renderer, camera_x, camera_y);
 
         moving_bot_1++;
+        int speed = 25;
         if(moving_bot_1 == 5)
         {
-            bot_cor_x = bot_cor_x + 50;
+            int type1 = rand() % 4;
+            if(type1 == 0)
+            {
+                if(checker_if_corner(camera_x - 100 + bot_cor_x_1, camera_y - 100 + bot_cor_y_1))
+                {
+                    bot_cor_x_1 = bot_cor_x_1 + speed;
+                }
+                else
+                {
+                    bot_cor_x_1 = bot_cor_x_1 - speed;
+                }
+            }
+            if(type1 == 1)
+            {
+                if(checker_if_corner(camera_x - 100 + bot_cor_x_1, camera_y - 100 + bot_cor_y_1))
+                {
+                    bot_cor_y_1 = bot_cor_y_1 + speed;
+                }
+                else
+                {
+                    bot_cor_y_1 = bot_cor_y_1 - speed;
+                }
+            }
+            if(type1 == 2)
+            {
+                if(checker_if_corner(camera_x - 100 + bot_cor_x_1, camera_y - 100 + bot_cor_y_1))
+                {
+                    bot_cor_x_1 = bot_cor_x_1 - speed;
+                }
+                else
+                {
+                    bot_cor_x_1 = bot_cor_x_1 + speed;
+                }
+            }
+            if(type1 == 3)
+            {
+                if(checker_if_corner(camera_x - 100 + bot_cor_x_1, camera_y - 100 + bot_cor_y_1))
+                {
+                    bot_cor_y_1 = bot_cor_y_1 - speed;
+                }
+                else
+                {
+                    bot_cor_y_1 = bot_cor_y_1 + speed;
+                }
+            }
+
+            int type2 = rand() % 4;
+            if(type2 == 0)
+            {
+                if(checker_if_corner(camera_x - 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
+                {
+                    bot_cor_x_2 = bot_cor_x_2 - speed;
+                }
+                else
+                {
+                    bot_cor_x_2 = bot_cor_x_2 + speed;
+                }
+            }
+            if(type2 == 1)
+            {
+                if(checker_if_corner(camera_x - 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
+                {
+                    bot_cor_y_2 = bot_cor_y_2 - speed;
+                }
+                else
+                {
+                    bot_cor_y_2 = bot_cor_y_2 + speed;
+                }
+            }
+            if(type2 == 2)
+            {
+                if(checker_if_corner(camera_x - 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
+                {
+                    bot_cor_x_2 = bot_cor_x_2 + speed;
+                }
+                else
+                {
+                    bot_cor_x_2 = bot_cor_x_2 - speed;
+                }
+            }
+            if(type2 == 3)
+            {
+                if(checker_if_corner(camera_x - 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
+                {
+                    bot_cor_y_2 = bot_cor_y_2 + speed;
+                }
+                else
+                {
+                    bot_cor_y_2 = bot_cor_y_2 - speed;
+                }
+            }
+
+            int type3 = rand() % 4;
+            if(type3 == 0)
+            {
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y - 100 + bot_cor_y_3))
+                {
+                    bot_cor_x_3 = bot_cor_x_3 + speed;
+                }
+                else
+                {
+                    bot_cor_x_3 = bot_cor_x_3 - speed;
+                }
+            }
+            if(type3 == 1)
+            {
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y - 100 + bot_cor_y_3))
+                {
+                    bot_cor_y_3 = bot_cor_y_3 + speed;
+                }
+                else
+                {
+                    bot_cor_y_3 = bot_cor_y_3 - speed;
+                }
+            }
+            if(type3 == 2)
+            {
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y - 100 + bot_cor_y_3))
+                {
+                    bot_cor_y_3 = bot_cor_y_3 - speed;
+                }
+                else
+                {
+                    bot_cor_y_3 = bot_cor_y_3 + speed;
+                }
+            }
+            if(type3 == 3)
+            {
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y - 100 + bot_cor_y_3))
+                {
+                    bot_cor_x_3 = bot_cor_x_3 - speed;
+                }
+                else
+                {
+                    bot_cor_x_3 = bot_cor_x_3 + speed;
+                }
+            }
+
+            int type4 = rand() % 2;
+            if(type4 == 0)
+            {
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_4, camera_y + 600 + bot_cor_y_4))
+                {
+                    bot_cor_x_4 = bot_cor_x_4 - speed;
+                }
+                else
+                {
+                    bot_cor_x_4 = bot_cor_x_4 + speed;
+                }
+            }
+            if(type4 == 1)
+            {
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_4, camera_y + 600 + bot_cor_y_4))
+                {
+                    bot_cor_y_4 = bot_cor_y_4 - speed;
+                }
+                else
+                {
+                    bot_cor_y_4 = bot_cor_y_4 + speed;
+                }
+            }
+            if(type4 == 2)
+            {
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_4, camera_y + 600 + bot_cor_y_4))
+                {
+                    bot_cor_x_4 = bot_cor_x_4 + speed;
+                }
+                else
+                {
+                    bot_cor_x_4 = bot_cor_x_4 - speed;
+                }
+            }
+            if(type4 == 3)
+            {
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_4, camera_y + 600 + bot_cor_y_4))
+                {
+                    bot_cor_y_4 = bot_cor_y_4 + speed;
+                }
+                else
+                {
+                    bot_cor_y_4 = bot_cor_y_4 - speed;
+                }
+            }
         }
         if(moving_bot_1 == 10)
         {
-            bot_cor_y = bot_cor_y - 50;
+            int type1 = rand() % 4;
+            if(type1 == 0)
+            {
+                if(checker_if_corner(camera_x - 100 + bot_cor_x_1, camera_y - 100 + bot_cor_y_1))
+                {
+                    bot_cor_x_1 = bot_cor_x_1 + speed;
+                }
+                else
+                {
+                    bot_cor_x_1 = bot_cor_x_1 - speed;
+                }
+            }
+            if(type1 == 1)
+            {
+                if(checker_if_corner(camera_x - 100 + bot_cor_x_1, camera_y - 100 + bot_cor_y_1))
+                {
+                    bot_cor_y_1 = bot_cor_y_1 + speed;
+                }
+                else
+                {
+                    bot_cor_y_1 = bot_cor_y_1 - speed;
+                }
+            }
+            if(type1 == 2)
+            {
+                if(checker_if_corner(camera_x - 100 + bot_cor_x_1, camera_y - 100 + bot_cor_y_1))
+                {
+                    bot_cor_x_1 = bot_cor_x_1 - speed;
+                }
+                else
+                {
+                    bot_cor_x_1 = bot_cor_x_1 + speed;
+                }
+            }
+            if(type1 == 3)
+            {
+                if(checker_if_corner(camera_x - 100 + bot_cor_x_1, camera_y - 100 + bot_cor_y_1))
+                {
+                    bot_cor_y_1 = bot_cor_y_1 - speed;
+                }
+                else
+                {
+                    bot_cor_y_1 = bot_cor_y_1 + speed;
+                }
+            }
+
+            int type2 = rand() % 4;
+            if(type2 == 0)
+            {
+                if(checker_if_corner(camera_x - 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
+                {
+                    bot_cor_x_2 = bot_cor_x_2 - speed;
+                }
+                else
+                {
+                    bot_cor_x_2 = bot_cor_x_2 + speed;
+                }
+            }
+            if(type2 == 1)
+            {
+                if(checker_if_corner(camera_x - 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
+                {
+                    bot_cor_y_2 = bot_cor_y_2 - speed;
+                }
+                else
+                {
+                    bot_cor_y_2 = bot_cor_y_2 + speed;
+                }
+            }
+            if(type2 == 2)
+            {
+                if(checker_if_corner(camera_x - 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
+                {
+                    bot_cor_x_2 = bot_cor_x_2 + speed;
+                }
+                else
+                {
+                    bot_cor_x_2 = bot_cor_x_2 - speed;
+                }
+            }
+            if(type2 == 3)
+            {
+                if(checker_if_corner(camera_x - 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
+                {
+                    bot_cor_y_2 = bot_cor_y_2 + speed;
+                }
+                else
+                {
+                    bot_cor_y_2 = bot_cor_y_2 - speed;
+                }
+            }
+
+            int type3 = rand() % 4;
+            if(type3 == 0)
+            {
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y - 100 + bot_cor_y_3))
+                {
+                    bot_cor_x_3 = bot_cor_x_3 + speed;
+                }
+                else
+                {
+                    bot_cor_x_3 = bot_cor_x_3 - speed;
+                }
+            }
+            if(type3 == 1)
+            {
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y - 100 + bot_cor_y_3))
+                {
+                    bot_cor_y_3 = bot_cor_y_3 + speed;
+                }
+                else
+                {
+                    bot_cor_y_3 = bot_cor_y_3 - speed;
+                }
+            }
+            if(type3 == 2)
+            {
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y - 100 + bot_cor_y_3))
+                {
+                    bot_cor_y_3 = bot_cor_y_3 - speed;
+                }
+                else
+                {
+                    bot_cor_y_3 = bot_cor_y_3 + speed;
+                }
+            }
+            if(type3 == 3)
+            {
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y - 100 + bot_cor_y_3))
+                {
+                    bot_cor_x_3 = bot_cor_x_3 - speed;
+                }
+                else
+                {
+                    bot_cor_x_3 = bot_cor_x_3 + speed;
+                }
+            }
+
+            int type4 = rand() % 2;
+            if(type4 == 0)
+            {
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_4, camera_y + 600 + bot_cor_y_4))
+                {
+                    bot_cor_x_4 = bot_cor_x_4 - speed;
+                }
+                else
+                {
+                    bot_cor_x_4 = bot_cor_x_4 + speed;
+                }
+            }
+            if(type4 == 1)
+            {
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_4, camera_y + 600 + bot_cor_y_4))
+                {
+                    bot_cor_y_4 = bot_cor_y_4 - speed;
+                }
+                else
+                {
+                    bot_cor_y_4 = bot_cor_y_4 + speed;
+                }
+            }
+            if(type4 == 2)
+            {
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_4, camera_y + 600 + bot_cor_y_4))
+                {
+                    bot_cor_x_4 = bot_cor_x_4 + speed;
+                }
+                else
+                {
+                    bot_cor_x_4 = bot_cor_x_4 - speed;
+                }
+            }
+            if(type4 == 3)
+            {
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_4, camera_y + 600 + bot_cor_y_4))
+                {
+                    bot_cor_y_4 = bot_cor_y_4 + speed;
+                }
+                else
+                {
+                    bot_cor_y_4 = bot_cor_y_4 - speed;
+                }
+            }
         }
         if(moving_bot_1 == 15)
         {
-            bot_cor_x = bot_cor_x - 50;
+            int type1 = rand() % 4;
+            if(type1 == 0)
+            {
+                if(checker_if_corner(camera_x - 100 + bot_cor_x_1, camera_y - 100 + bot_cor_y_1))
+                {
+                    bot_cor_x_1 = bot_cor_x_1 + speed;
+                }
+                else
+                {
+                    bot_cor_x_1 = bot_cor_x_1 - speed;
+                }
+            }
+            if(type1 == 1)
+            {
+                if(checker_if_corner(camera_x - 100 + bot_cor_x_1, camera_y - 100 + bot_cor_y_1))
+                {
+                    bot_cor_y_1 = bot_cor_y_1 + speed;
+                }
+                else
+                {
+                    bot_cor_y_1 = bot_cor_y_1 - speed;
+                }
+            }
+            if(type1 == 2)
+            {
+                if(checker_if_corner(camera_x - 100 + bot_cor_x_1, camera_y - 100 + bot_cor_y_1))
+                {
+                    bot_cor_x_1 = bot_cor_x_1 - speed;
+                }
+                else
+                {
+                    bot_cor_x_1 = bot_cor_x_1 + speed;
+                }
+            }
+            if(type1 == 3)
+            {
+                if(checker_if_corner(camera_x - 100 + bot_cor_x_1, camera_y - 100 + bot_cor_y_1))
+                {
+                    bot_cor_y_1 = bot_cor_y_1 - speed;
+                }
+                else
+                {
+                    bot_cor_y_1 = bot_cor_y_1 + speed;
+                }
+            }
+
+            int type2 = rand() % 4;
+            if(type2 == 0)
+            {
+                if(checker_if_corner(camera_x - 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
+                {
+                    bot_cor_x_2 = bot_cor_x_2 - speed;
+                }
+                else
+                {
+                    bot_cor_x_2 = bot_cor_x_2 + speed;
+                }
+            }
+            if(type2 == 1)
+            {
+                if(checker_if_corner(camera_x - 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
+                {
+                    bot_cor_y_2 = bot_cor_y_2 - speed;
+                }
+                else
+                {
+                    bot_cor_y_2 = bot_cor_y_2 + speed;
+                }
+            }
+            if(type2 == 2)
+            {
+                if(checker_if_corner(camera_x - 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
+                {
+                    bot_cor_x_2 = bot_cor_x_2 + speed;
+                }
+                else
+                {
+                    bot_cor_x_2 = bot_cor_x_2 - speed;
+                }
+            }
+            if(type2 == 3)
+            {
+                if(checker_if_corner(camera_x - 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
+                {
+                    bot_cor_y_2 = bot_cor_y_2 + speed;
+                }
+                else
+                {
+                    bot_cor_y_2 = bot_cor_y_2 - speed;
+                }
+            }
+
+            int type3 = rand() % 4;
+            if(type3 == 0)
+            {
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y - 100 + bot_cor_y_3))
+                {
+                    bot_cor_x_3 = bot_cor_x_3 + speed;
+                }
+                else
+                {
+                    bot_cor_x_3 = bot_cor_x_3 - speed;
+                }
+            }
+            if(type3 == 1)
+            {
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y - 100 + bot_cor_y_3))
+                {
+                    bot_cor_y_3 = bot_cor_y_3 + speed;
+                }
+                else
+                {
+                    bot_cor_y_3 = bot_cor_y_3 - speed;
+                }
+            }
+            if(type3 == 2)
+            {
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y - 100 + bot_cor_y_3))
+                {
+                    bot_cor_y_3 = bot_cor_y_3 - speed;
+                }
+                else
+                {
+                    bot_cor_y_3 = bot_cor_y_3 + speed;
+                }
+            }
+            if(type3 == 3)
+            {
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y - 100 + bot_cor_y_3))
+                {
+                    bot_cor_x_3 = bot_cor_x_3 - speed;
+                }
+                else
+                {
+                    bot_cor_x_3 = bot_cor_x_3 + speed;
+                }
+            }
+
+            int type4 = rand() % 2;
+            if(type4 == 0)
+            {
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_4, camera_y + 600 + bot_cor_y_4))
+                {
+                    bot_cor_x_4 = bot_cor_x_4 - speed;
+                }
+                else
+                {
+                    bot_cor_x_4 = bot_cor_x_4 + speed;
+                }
+            }
+            if(type4 == 1)
+            {
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_4, camera_y + 600 + bot_cor_y_4))
+                {
+                    bot_cor_y_4 = bot_cor_y_4 - speed;
+                }
+                else
+                {
+                    bot_cor_y_4 = bot_cor_y_4 + speed;
+                }
+            }
+            if(type4 == 2)
+            {
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_4, camera_y + 600 + bot_cor_y_4))
+                {
+                    bot_cor_x_4 = bot_cor_x_4 + speed;
+                }
+                else
+                {
+                    bot_cor_x_4 = bot_cor_x_4 - speed;
+                }
+            }
+            if(type4 == 3)
+            {
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_4, camera_y + 600 + bot_cor_y_4))
+                {
+                    bot_cor_y_4 = bot_cor_y_4 + speed;
+                }
+                else
+                {
+                    bot_cor_y_4 = bot_cor_y_4 - speed;
+                }
+            }
         }
         if(moving_bot_1 == 20)
         {
-            bot_cor_y = bot_cor_y + 50;
+            int type1 = rand() % 4;
+            if(type1 == 0)
+            {
+                if(checker_if_corner(camera_x - 100 + bot_cor_x_1, camera_y - 100 + bot_cor_y_1))
+                {
+                    bot_cor_x_1 = bot_cor_x_1 + speed;
+                }
+                else
+                {
+                    bot_cor_x_1 = bot_cor_x_1 - speed;
+                }
+            }
+            if(type1 == 1)
+            {
+                if(checker_if_corner(camera_x - 100 + bot_cor_x_1, camera_y - 100 + bot_cor_y_1))
+                {
+                    bot_cor_y_1 = bot_cor_y_1 + speed;
+                }
+                else
+                {
+                    bot_cor_y_1 = bot_cor_y_1 - speed;
+                }
+            }
+            if(type1 == 2)
+            {
+                if(checker_if_corner(camera_x - 100 + bot_cor_x_1, camera_y - 100 + bot_cor_y_1))
+                {
+                    bot_cor_x_1 = bot_cor_x_1 - speed;
+                }
+                else
+                {
+                    bot_cor_x_1 = bot_cor_x_1 + speed;
+                }
+            }
+            if(type1 == 3)
+            {
+                if(checker_if_corner(camera_x - 100 + bot_cor_x_1, camera_y - 100 + bot_cor_y_1))
+                {
+                    bot_cor_y_1 = bot_cor_y_1 - speed;
+                }
+                else
+                {
+                    bot_cor_y_1 = bot_cor_y_1 + speed;
+                }
+            }
+
+            int type2 = rand() % 4;
+            if(type2 == 0)
+            {
+                if(checker_if_corner(camera_x - 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
+                {
+                    bot_cor_x_2 = bot_cor_x_2 - speed;
+                }
+                else
+                {
+                    bot_cor_x_2 = bot_cor_x_2 + speed;
+                }
+            }
+            if(type2 == 1)
+            {
+                if(checker_if_corner(camera_x - 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
+                {
+                    bot_cor_y_2 = bot_cor_y_2 - speed;
+                }
+                else
+                {
+                    bot_cor_y_2 = bot_cor_y_2 + speed;
+                }
+            }
+            if(type2 == 2)
+            {
+                if(checker_if_corner(camera_x - 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
+                {
+                    bot_cor_x_2 = bot_cor_x_2 + speed;
+                }
+                else
+                {
+                    bot_cor_x_2 = bot_cor_x_2 - speed;
+                }
+            }
+            if(type2 == 3)
+            {
+                if(checker_if_corner(camera_x - 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
+                {
+                    bot_cor_y_2 = bot_cor_y_2 + speed;
+                }
+                else
+                {
+                    bot_cor_y_2 = bot_cor_y_2 - speed;
+                }
+            }
+
+            int type3 = rand() % 4;
+            if(type3 == 0)
+            {
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y - 100 + bot_cor_y_3))
+                {
+                    bot_cor_x_3 = bot_cor_x_3 + speed;
+                }
+                else
+                {
+                    bot_cor_x_3 = bot_cor_x_3 - speed;
+                }
+            }
+            if(type3 == 1)
+            {
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y - 100 + bot_cor_y_3))
+                {
+                    bot_cor_y_3 = bot_cor_y_3 + speed;
+                }
+                else
+                {
+                    bot_cor_y_3 = bot_cor_y_3 - speed;
+                }
+            }
+            if(type3 == 2)
+            {
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y - 100 + bot_cor_y_3))
+                {
+                    bot_cor_y_3 = bot_cor_y_3 - speed;
+                }
+                else
+                {
+                    bot_cor_y_3 = bot_cor_y_3 + speed;
+                }
+            }
+            if(type3 == 3)
+            {
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y - 100 + bot_cor_y_3))
+                {
+                    bot_cor_x_3 = bot_cor_x_3 - speed;
+                }
+                else
+                {
+                    bot_cor_x_3 = bot_cor_x_3 + speed;
+                }
+            }
+
+            int type4 = rand() % 2;
+            if(type4 == 0)
+            {
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_4, camera_y + 600 + bot_cor_y_4))
+                {
+                    bot_cor_x_4 = bot_cor_x_4 - speed;
+                }
+                else
+                {
+                    bot_cor_x_4 = bot_cor_x_4 + speed;
+                }
+            }
+            if(type4 == 1)
+            {
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_4, camera_y + 600 + bot_cor_y_4))
+                {
+                    bot_cor_y_4 = bot_cor_y_4 - speed;
+                }
+                else
+                {
+                    bot_cor_y_4 = bot_cor_y_4 + speed;
+                }
+            }
+            if(type4 == 2)
+            {
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_4, camera_y + 600 + bot_cor_y_4))
+                {
+                    bot_cor_x_4 = bot_cor_x_4 + speed;
+                }
+                else
+                {
+                    bot_cor_x_4 = bot_cor_x_4 - speed;
+                }
+            }
+            if(type4 == 3)
+            {
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_4, camera_y + 600 + bot_cor_y_4))
+                {
+                    bot_cor_y_4 = bot_cor_y_4 + speed;
+                }
+                else
+                {
+                    bot_cor_y_4 = bot_cor_y_4 - speed;
+                }
+            }
             moving_bot_1 = 0;
         }
 
 
-        SDL_Rect enemy_1 = {camera_x + bot_cor_x, camera_y + bot_cor_y - 700, 100, 100};
-        if(enemies.health1 > 0)
+        SDL_Rect enemy_1 = {camera_x + 100 + bot_cor_x_1, camera_y + 100 + bot_cor_y_1, 100, 100};
+        if(enemies.health1 >= 0)
         {
             if(for_bot_1 == 1)
             {
@@ -448,8 +1196,8 @@ int main(int argc, char* argv[])
             }
         }
 
-        SDL_Rect enemy_2 = {camera_x + bot_cor_x, camera_y + bot_cor_y, 100, 100};
-        if(enemies.health2 > 0)
+        SDL_Rect enemy_2 = {camera_x + 100 + bot_cor_x_2, camera_y + 800 + bot_cor_y_2, 100, 100};
+        if(enemies.health2 >= 0)
         {
             if(for_bot_2 == 1)
             {
@@ -461,8 +1209,8 @@ int main(int argc, char* argv[])
             }
         }
 
-        SDL_Rect enemy_3 = {camera_x + bot_cor_x + 700, camera_y + bot_cor_y - 700, 100, 100};
-        if(enemies.health3 > 0)
+        SDL_Rect enemy_3 = {camera_x + 800 + bot_cor_x_3, camera_y + 100 + bot_cor_y_3, 100, 100};
+        if(enemies.health3 >= 0)
         {
             if(for_bot_3 == 1)
             {
@@ -474,8 +1222,8 @@ int main(int argc, char* argv[])
             }
         }
 
-        SDL_Rect enemy_4 = {camera_x + bot_cor_x + 700, camera_y + bot_cor_y, 100, 100};
-        if(enemies.health4 > 0)
+        SDL_Rect enemy_4 = {camera_x + 800 + bot_cor_x_4, camera_y + 800 + bot_cor_y_4, 100, 100};
+        if(enemies.health4 >= 0)
         {
             if(for_bot_4 == 1)
             {
@@ -503,23 +1251,6 @@ int main(int argc, char* argv[])
         }
         else if (isHitting)
         {
-            if(enemy_1.x + 60 >= posX && enemy_1.y + 60 >= posY)
-            {
-                enemies.health1--;
-            }
-            else if(enemy_2.x + 60 >= posX && enemy_2.y + 60 >= posY)
-            {
-                enemies.health2--;
-            }
-            else if(enemy_3.x + 60 >= posX && enemy_3.y + 60 >= posY)
-            {
-                enemies.health3--;
-            }
-            else if(enemy_4.x + 60 >= posX && enemy_4.y + 60 >= posY)
-            {
-                enemies.health4--;
-            }
-
             if(type_1 == 1)
             {
                 if(type_2 == 1) // удар вверх
