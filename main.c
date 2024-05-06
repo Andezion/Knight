@@ -1,4 +1,5 @@
 #include <SDL.h>
+#include <SDL_audio.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -441,7 +442,7 @@ int main(int argc, char* argv[])
             int type1 = rand() % 4;
             if(type1 == 0)
             {
-                if(checker_if_corner(camera_x - 100 + bot_cor_x_1, camera_y - 100 + bot_cor_y_1))
+                if(checker_if_corner(camera_x + 100 + bot_cor_x_1, camera_y + 100 + bot_cor_y_1))
                 {
                     bot_cor_x_1 = bot_cor_x_1 + speed;
                 }
@@ -452,7 +453,7 @@ int main(int argc, char* argv[])
             }
             if(type1 == 1)
             {
-                if(checker_if_corner(camera_x - 100 + bot_cor_x_1, camera_y - 100 + bot_cor_y_1))
+                if(checker_if_corner(camera_x + 100 + bot_cor_x_1, camera_y + 100 + bot_cor_y_1))
                 {
                     bot_cor_y_1 = bot_cor_y_1 + speed;
                 }
@@ -463,7 +464,7 @@ int main(int argc, char* argv[])
             }
             if(type1 == 2)
             {
-                if(checker_if_corner(camera_x - 100 + bot_cor_x_1, camera_y - 100 + bot_cor_y_1))
+                if(checker_if_corner(camera_x + 100 + bot_cor_x_1, camera_y + 100 + bot_cor_y_1))
                 {
                     bot_cor_x_1 = bot_cor_x_1 - speed;
                 }
@@ -474,7 +475,7 @@ int main(int argc, char* argv[])
             }
             if(type1 == 3)
             {
-                if(checker_if_corner(camera_x - 100 + bot_cor_x_1, camera_y - 100 + bot_cor_y_1))
+                if(checker_if_corner(camera_x + 100 + bot_cor_x_1, camera_y + 100 + bot_cor_y_1))
                 {
                     bot_cor_y_1 = bot_cor_y_1 - speed;
                 }
@@ -487,7 +488,7 @@ int main(int argc, char* argv[])
             int type2 = rand() % 4;
             if(type2 == 0)
             {
-                if(checker_if_corner(camera_x - 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
+                if(checker_if_corner(camera_x + 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
                 {
                     bot_cor_x_2 = bot_cor_x_2 - speed;
                 }
@@ -498,7 +499,7 @@ int main(int argc, char* argv[])
             }
             if(type2 == 1)
             {
-                if(checker_if_corner(camera_x - 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
+                if(checker_if_corner(camera_x + 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
                 {
                     bot_cor_y_2 = bot_cor_y_2 - speed;
                 }
@@ -509,7 +510,7 @@ int main(int argc, char* argv[])
             }
             if(type2 == 2)
             {
-                if(checker_if_corner(camera_x - 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
+                if(checker_if_corner(camera_x + + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
                 {
                     bot_cor_x_2 = bot_cor_x_2 + speed;
                 }
@@ -520,7 +521,7 @@ int main(int argc, char* argv[])
             }
             if(type2 == 3)
             {
-                if(checker_if_corner(camera_x - 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
+                if(checker_if_corner(camera_x + 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
                 {
                     bot_cor_y_2 = bot_cor_y_2 + speed;
                 }
@@ -533,7 +534,7 @@ int main(int argc, char* argv[])
             int type3 = rand() % 4;
             if(type3 == 0)
             {
-                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y - 100 + bot_cor_y_3))
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y + 100 + bot_cor_y_3))
                 {
                     bot_cor_x_3 = bot_cor_x_3 + speed;
                 }
@@ -544,7 +545,7 @@ int main(int argc, char* argv[])
             }
             if(type3 == 1)
             {
-                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y - 100 + bot_cor_y_3))
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y + 100 + bot_cor_y_3))
                 {
                     bot_cor_y_3 = bot_cor_y_3 + speed;
                 }
@@ -555,7 +556,7 @@ int main(int argc, char* argv[])
             }
             if(type3 == 2)
             {
-                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y - 100 + bot_cor_y_3))
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y + 100 + bot_cor_y_3))
                 {
                     bot_cor_y_3 = bot_cor_y_3 - speed;
                 }
@@ -566,7 +567,7 @@ int main(int argc, char* argv[])
             }
             if(type3 == 3)
             {
-                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y - 100 + bot_cor_y_3))
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y + 100 + bot_cor_y_3))
                 {
                     bot_cor_x_3 = bot_cor_x_3 - speed;
                 }
@@ -627,7 +628,7 @@ int main(int argc, char* argv[])
             int type1 = rand() % 4;
             if(type1 == 0)
             {
-                if(checker_if_corner(camera_x - 100 + bot_cor_x_1, camera_y - 100 + bot_cor_y_1))
+                if(checker_if_corner(camera_x + 100 + bot_cor_x_1, camera_y + 100 + bot_cor_y_1))
                 {
                     bot_cor_x_1 = bot_cor_x_1 + speed;
                 }
@@ -638,7 +639,7 @@ int main(int argc, char* argv[])
             }
             if(type1 == 1)
             {
-                if(checker_if_corner(camera_x - 100 + bot_cor_x_1, camera_y - 100 + bot_cor_y_1))
+                if(checker_if_corner(camera_x + 100 + bot_cor_x_1, camera_y + 100 + bot_cor_y_1))
                 {
                     bot_cor_y_1 = bot_cor_y_1 + speed;
                 }
@@ -649,7 +650,7 @@ int main(int argc, char* argv[])
             }
             if(type1 == 2)
             {
-                if(checker_if_corner(camera_x - 100 + bot_cor_x_1, camera_y - 100 + bot_cor_y_1))
+                if(checker_if_corner(camera_x + 100 + bot_cor_x_1, camera_y + 100 + bot_cor_y_1))
                 {
                     bot_cor_x_1 = bot_cor_x_1 - speed;
                 }
@@ -660,7 +661,7 @@ int main(int argc, char* argv[])
             }
             if(type1 == 3)
             {
-                if(checker_if_corner(camera_x - 100 + bot_cor_x_1, camera_y - 100 + bot_cor_y_1))
+                if(checker_if_corner(camera_x + 100 + bot_cor_x_1, camera_y + 100 + bot_cor_y_1))
                 {
                     bot_cor_y_1 = bot_cor_y_1 - speed;
                 }
@@ -673,7 +674,7 @@ int main(int argc, char* argv[])
             int type2 = rand() % 4;
             if(type2 == 0)
             {
-                if(checker_if_corner(camera_x - 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
+                if(checker_if_corner(camera_x + 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
                 {
                     bot_cor_x_2 = bot_cor_x_2 - speed;
                 }
@@ -684,7 +685,7 @@ int main(int argc, char* argv[])
             }
             if(type2 == 1)
             {
-                if(checker_if_corner(camera_x - 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
+                if(checker_if_corner(camera_x + 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
                 {
                     bot_cor_y_2 = bot_cor_y_2 - speed;
                 }
@@ -695,7 +696,7 @@ int main(int argc, char* argv[])
             }
             if(type2 == 2)
             {
-                if(checker_if_corner(camera_x - 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
+                if(checker_if_corner(camera_x + 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
                 {
                     bot_cor_x_2 = bot_cor_x_2 + speed;
                 }
@@ -706,7 +707,7 @@ int main(int argc, char* argv[])
             }
             if(type2 == 3)
             {
-                if(checker_if_corner(camera_x - 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
+                if(checker_if_corner(camera_x + 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
                 {
                     bot_cor_y_2 = bot_cor_y_2 + speed;
                 }
@@ -719,7 +720,7 @@ int main(int argc, char* argv[])
             int type3 = rand() % 4;
             if(type3 == 0)
             {
-                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y - 100 + bot_cor_y_3))
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y + 100 + bot_cor_y_3))
                 {
                     bot_cor_x_3 = bot_cor_x_3 + speed;
                 }
@@ -730,7 +731,7 @@ int main(int argc, char* argv[])
             }
             if(type3 == 1)
             {
-                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y - 100 + bot_cor_y_3))
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y + 100 + bot_cor_y_3))
                 {
                     bot_cor_y_3 = bot_cor_y_3 + speed;
                 }
@@ -741,7 +742,7 @@ int main(int argc, char* argv[])
             }
             if(type3 == 2)
             {
-                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y - 100 + bot_cor_y_3))
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y + 100 + bot_cor_y_3))
                 {
                     bot_cor_y_3 = bot_cor_y_3 - speed;
                 }
@@ -752,7 +753,7 @@ int main(int argc, char* argv[])
             }
             if(type3 == 3)
             {
-                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y - 100 + bot_cor_y_3))
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y + 100 + bot_cor_y_3))
                 {
                     bot_cor_x_3 = bot_cor_x_3 - speed;
                 }
@@ -813,7 +814,7 @@ int main(int argc, char* argv[])
             int type1 = rand() % 4;
             if(type1 == 0)
             {
-                if(checker_if_corner(camera_x - 100 + bot_cor_x_1, camera_y - 100 + bot_cor_y_1))
+                if(checker_if_corner(camera_x + 100 + bot_cor_x_1, camera_y + 100 + bot_cor_y_1))
                 {
                     bot_cor_x_1 = bot_cor_x_1 + speed;
                 }
@@ -824,7 +825,7 @@ int main(int argc, char* argv[])
             }
             if(type1 == 1)
             {
-                if(checker_if_corner(camera_x - 100 + bot_cor_x_1, camera_y - 100 + bot_cor_y_1))
+                if(checker_if_corner(camera_x + 100 + bot_cor_x_1, camera_y + 100 + bot_cor_y_1))
                 {
                     bot_cor_y_1 = bot_cor_y_1 + speed;
                 }
@@ -835,7 +836,7 @@ int main(int argc, char* argv[])
             }
             if(type1 == 2)
             {
-                if(checker_if_corner(camera_x - 100 + bot_cor_x_1, camera_y - 100 + bot_cor_y_1))
+                if(checker_if_corner(camera_x + 100 + bot_cor_x_1, camera_y + 100 + bot_cor_y_1))
                 {
                     bot_cor_x_1 = bot_cor_x_1 - speed;
                 }
@@ -846,7 +847,7 @@ int main(int argc, char* argv[])
             }
             if(type1 == 3)
             {
-                if(checker_if_corner(camera_x - 100 + bot_cor_x_1, camera_y - 100 + bot_cor_y_1))
+                if(checker_if_corner(camera_x + 100 + bot_cor_x_1, camera_y + 100 + bot_cor_y_1))
                 {
                     bot_cor_y_1 = bot_cor_y_1 - speed;
                 }
@@ -859,7 +860,7 @@ int main(int argc, char* argv[])
             int type2 = rand() % 4;
             if(type2 == 0)
             {
-                if(checker_if_corner(camera_x - 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
+                if(checker_if_corner(camera_x + 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
                 {
                     bot_cor_x_2 = bot_cor_x_2 - speed;
                 }
@@ -870,7 +871,7 @@ int main(int argc, char* argv[])
             }
             if(type2 == 1)
             {
-                if(checker_if_corner(camera_x - 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
+                if(checker_if_corner(camera_x + 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
                 {
                     bot_cor_y_2 = bot_cor_y_2 - speed;
                 }
@@ -881,7 +882,7 @@ int main(int argc, char* argv[])
             }
             if(type2 == 2)
             {
-                if(checker_if_corner(camera_x - 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
+                if(checker_if_corner(camera_x + 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
                 {
                     bot_cor_x_2 = bot_cor_x_2 + speed;
                 }
@@ -892,7 +893,7 @@ int main(int argc, char* argv[])
             }
             if(type2 == 3)
             {
-                if(checker_if_corner(camera_x - 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
+                if(checker_if_corner(camera_x + 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
                 {
                     bot_cor_y_2 = bot_cor_y_2 + speed;
                 }
@@ -905,7 +906,7 @@ int main(int argc, char* argv[])
             int type3 = rand() % 4;
             if(type3 == 0)
             {
-                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y - 100 + bot_cor_y_3))
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y + 100 + bot_cor_y_3))
                 {
                     bot_cor_x_3 = bot_cor_x_3 + speed;
                 }
@@ -916,7 +917,7 @@ int main(int argc, char* argv[])
             }
             if(type3 == 1)
             {
-                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y - 100 + bot_cor_y_3))
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y + 100 + bot_cor_y_3))
                 {
                     bot_cor_y_3 = bot_cor_y_3 + speed;
                 }
@@ -927,7 +928,7 @@ int main(int argc, char* argv[])
             }
             if(type3 == 2)
             {
-                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y - 100 + bot_cor_y_3))
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y + 100 + bot_cor_y_3))
                 {
                     bot_cor_y_3 = bot_cor_y_3 - speed;
                 }
@@ -938,7 +939,7 @@ int main(int argc, char* argv[])
             }
             if(type3 == 3)
             {
-                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y - 100 + bot_cor_y_3))
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y + 100 + bot_cor_y_3))
                 {
                     bot_cor_x_3 = bot_cor_x_3 - speed;
                 }
@@ -999,7 +1000,7 @@ int main(int argc, char* argv[])
             int type1 = rand() % 4;
             if(type1 == 0)
             {
-                if(checker_if_corner(camera_x - 100 + bot_cor_x_1, camera_y - 100 + bot_cor_y_1))
+                if(checker_if_corner(camera_x + 100 + bot_cor_x_1, camera_y + 100 + bot_cor_y_1))
                 {
                     bot_cor_x_1 = bot_cor_x_1 + speed;
                 }
@@ -1010,7 +1011,7 @@ int main(int argc, char* argv[])
             }
             if(type1 == 1)
             {
-                if(checker_if_corner(camera_x - 100 + bot_cor_x_1, camera_y - 100 + bot_cor_y_1))
+                if(checker_if_corner(camera_x + 100 + bot_cor_x_1, camera_y + 100 + bot_cor_y_1))
                 {
                     bot_cor_y_1 = bot_cor_y_1 + speed;
                 }
@@ -1021,7 +1022,7 @@ int main(int argc, char* argv[])
             }
             if(type1 == 2)
             {
-                if(checker_if_corner(camera_x - 100 + bot_cor_x_1, camera_y - 100 + bot_cor_y_1))
+                if(checker_if_corner(camera_x + 100 + bot_cor_x_1, camera_y + 100 + bot_cor_y_1))
                 {
                     bot_cor_x_1 = bot_cor_x_1 - speed;
                 }
@@ -1032,7 +1033,7 @@ int main(int argc, char* argv[])
             }
             if(type1 == 3)
             {
-                if(checker_if_corner(camera_x - 100 + bot_cor_x_1, camera_y - 100 + bot_cor_y_1))
+                if(checker_if_corner(camera_x + 100 + bot_cor_x_1, camera_y + 100 + bot_cor_y_1))
                 {
                     bot_cor_y_1 = bot_cor_y_1 - speed;
                 }
@@ -1045,7 +1046,7 @@ int main(int argc, char* argv[])
             int type2 = rand() % 4;
             if(type2 == 0)
             {
-                if(checker_if_corner(camera_x - 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
+                if(checker_if_corner(camera_x + 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
                 {
                     bot_cor_x_2 = bot_cor_x_2 - speed;
                 }
@@ -1056,7 +1057,7 @@ int main(int argc, char* argv[])
             }
             if(type2 == 1)
             {
-                if(checker_if_corner(camera_x - 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
+                if(checker_if_corner(camera_x + 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
                 {
                     bot_cor_y_2 = bot_cor_y_2 - speed;
                 }
@@ -1067,7 +1068,7 @@ int main(int argc, char* argv[])
             }
             if(type2 == 2)
             {
-                if(checker_if_corner(camera_x - 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
+                if(checker_if_corner(camera_x + 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
                 {
                     bot_cor_x_2 = bot_cor_x_2 + speed;
                 }
@@ -1078,7 +1079,7 @@ int main(int argc, char* argv[])
             }
             if(type2 == 3)
             {
-                if(checker_if_corner(camera_x - 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
+                if(checker_if_corner(camera_x + 100 + bot_cor_x_2, camera_y + 600 + bot_cor_y_2))
                 {
                     bot_cor_y_2 = bot_cor_y_2 + speed;
                 }
@@ -1091,7 +1092,7 @@ int main(int argc, char* argv[])
             int type3 = rand() % 4;
             if(type3 == 0)
             {
-                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y - 100 + bot_cor_y_3))
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y + 100 + bot_cor_y_3))
                 {
                     bot_cor_x_3 = bot_cor_x_3 + speed;
                 }
@@ -1102,7 +1103,7 @@ int main(int argc, char* argv[])
             }
             if(type3 == 1)
             {
-                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y - 100 + bot_cor_y_3))
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y + 100 + bot_cor_y_3))
                 {
                     bot_cor_y_3 = bot_cor_y_3 + speed;
                 }
@@ -1113,7 +1114,7 @@ int main(int argc, char* argv[])
             }
             if(type3 == 2)
             {
-                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y - 100 + bot_cor_y_3))
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y + 100 + bot_cor_y_3))
                 {
                     bot_cor_y_3 = bot_cor_y_3 - speed;
                 }
@@ -1124,7 +1125,7 @@ int main(int argc, char* argv[])
             }
             if(type3 == 3)
             {
-                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y - 100 + bot_cor_y_3))
+                if(checker_if_corner(camera_x + 600 + bot_cor_x_3, camera_y + 100 + bot_cor_y_3))
                 {
                     bot_cor_x_3 = bot_cor_x_3 - speed;
                 }
