@@ -38,4 +38,47 @@ Here is my little boy:
 
 ![Knight](./Photo/type2.jpg)
 
+I decided to make the number of bots and where they are generated random, that way gameplay will be more varied. Also now I will demonstrate the moment of my knight's strike.
+```
+            else if (event.key.keysym.sym == SDLK_SPACE)
+            {
+                isHitting = 1;
+                
+                if(type_1 == 1)
+                {
+                    if(type_2 == 1)
+                    {
+                        SDL_Rect rect_hit = {posX, posY, WIDTH, HEIGHT};
+                        SDL_RenderCopy(renderer, texture_for_hitting_up[current_hit_up % frames_type_two], NULL, &rect_hit);
+                        current_hit_up = (current_hit_up + 1) % frames_type_two;
+                    }
+                    else
+                    {
+                        SDL_Rect rect_hit = {posX, posY, WIDTH, HEIGHT};
+                        SDL_RenderCopy(renderer, texture_for_hitting_down[current_hit_down % frames_type_two], NULL, &rect_hit);
+                        current_hit_down = (current_hit_down + 1) % frames_type_two;
+                    }
+                }
+                else
+                {
+                    if(type_2 == 1)
+                    {
+                        SDL_Rect rect_hit = {posX, posY, WIDTH, HEIGHT};
+                        SDL_RenderCopy(renderer, texture_for_hitting_in_plus[current_hit_in_plus % frames_type_two], NULL, &rect_hit);
+                        current_hit_in_plus = (current_hit_in_plus + 1) % frames_type_two;
+                    }
+                    else
+                    {
+                        SDL_Rect rect_hit = {posX, posY, WIDTH, HEIGHT};
+                        SDL_RenderCopy(renderer, texture_for_hitting_in_minus[current_hit_in_minus % frames_type_two], NULL, &rect_hit);
+                        current_hit_in_minus = (current_hit_in_minus + 1) % frames_type_two;
+                    }
+                }
+            }
+```
+What does that mean? It means that when we press the spacebar we determine the direction of our knight (right or left) and depending on this we load a new array of textures into the renderer for playback!
+For example:
+
+![Hit1](./Photo/type1.jpg)
+
     
