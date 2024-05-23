@@ -77,8 +77,12 @@ I decided to make the number of bots and where they are generated random, that w
             }
 ```
 What does that mean? It means that when we press the spacebar we determine the direction of our knight (right or left) and depending on this we load a new array of textures into the renderer for playback!
-For example:
+For example, when he hits:
 
 ![Hit1](./Photo/type1.jpg)
+
+And there is when he just stand: 
+
+![Hit2](./Photo/type3.jpg)
 
     
