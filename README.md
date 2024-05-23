@@ -35,6 +35,7 @@ int loadTextureArray(SDL_Renderer* renderer, const char** fileNames, int arraySi
 }
 ```
 Here is my little boy:
-![Knight](./Photo/type1.jpg)
+
+![Knight](./Photo/type2.jpg)
 
     
