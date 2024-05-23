@@ -85,4 +85,15 @@ And there is when he just stand:
 
 ![Hit2](./Photo/type3.jpg)
 
+## Technologies
+Project is created with:
+* SDL, SDL2 and stuff
+* CLion with C lang
+* Photoshop for editing frames
+* Structers, we don't have classes there :)
+* My anal pain
+
+## Setup 
+I didn't do release yet, but soon it will appear in this project. Without release it would be pointless to try to download, because CMakefiles is too hard to handle, so...
+
     
