@@ -2,6 +2,7 @@
 This is my test game for understanding basics of SDL and game development on C.
 ## Table on contents
 * [General info](#general-info)
+* [Gameplay](#gameplay)
 * [Technologies](#technologies)
 * [Setup](#setup)
 
@@ -84,6 +85,10 @@ For example, when he hits:
 And there is when he just stand: 
 
 ![Hit2](./Photo/type3.jpg)
+
+## Gameplay
+
+https://github.com/Andezion/Knight/assets/115638748/3f3fc47b-fc7f-4eb6-9a32-070ba6883f2d
 
 ## Technologies
 Project is created with:
